@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cologne 2016 Pickem Challenge - Team</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    
+    <!--JAVASCRIPT-->
+    <script src="jquery-3.0.0.js"></script> <!--Jquery-->
+    <script src="js.cookie.js"></script> <!--Cookie Manager-->
+    
+    <script>
+        
+        var userAuthCode;
+        var steamId;
+        
+        $(document).ready(GetCookies(), GetTournamentLayout(), GetUserInventory());
+        
+        /*Uses a HTTP POST request to send off the previously placed prediction. Is called solely in placePrediction()*/
+        function sendPrediction(sectionId, groupId, index, pickId, itemId)
+        {
+            var postBody = "event=10&steamid="+steamId+"&steamidkey="+userAuthCode+"&sectionid="+sectionId+"&groupid="+groupId+"&index="+index+"&pickid="+pickId+"&itemid="+itemId+"";
+            
+            console.log(sectionId);
+            console.log(groupId);
+            console.log(index);
+            console.log(pickId);
+            console.log(itemId);
+            console.log(postBody);
+            
+            $.ajax({
+                method: 'POST',
+                url: 'http://pickemchallenge.2fh.co/Pickem-Challenge/external/placePredictions.php?route',
+                data: postBody,
+                success: function(res)
+                {
+                    console.info("sendPrediction(): Placed Prediction!");
+                },
+                error: function(xhr, status, error)
+                {
+                    console.log("Status: " + status + "\nError: " + error);
+                }
+            });
+        }
+        
+        /*Checks the button press in the html and tries to place a prediction to the corresponding pickid.*/
+        function placePrediction(pickid, sectionId, groupId, index)
+        {
+            var userInventory = userInventoryPassed;
+            
+            switch(pickid)
+                {
+                    case 60:
+                        /*return Astralis*/
+                        var hasSticker = false;
+                        var itemId;
+                        
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 60)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemid;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                                if (confirm("You do not own an Astralis sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_legends_collection&category_730_TournamentTeam%5B%5D=tag_Team60&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    }
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked Astralis!");
+                                   sendPrediction(sectionId, groupId, index, 60, itemId); 
+                                }
+                                
+                            }
+                        
+                        break;
+                    
+                    case 24:
+                        /*return Dignitas*/
+                        var hasSticker = false;
+                        var itemId;
+                        
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 24)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemid;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                                if (confirm("You do not own a Dignitas sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_challengers_collection&category_730_TournamentTeam%5B%5D=tag_Team24&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    }
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked Dignitas!");
+                                   sendPrediction(sectionId, groupId, index, 24, itemId); 
+                                }
+                            }
+                        
+                        
+                        break;
+                    
+                    case 49:
+                        /*return CLG*/
+                        var hasSticker = false;
+                        var itemId;
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 49)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemid;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                               if (confirm("You do not own a CLG sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_legends_collection&category_730_TournamentTeam%5B%5D=tag_Team49&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    } 
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked CLG!");
+                                   sendPrediction(sectionId, groupId, index, 49, itemId); 
+                                }
+                            }
+                        
+                        break;
+                        
+                    case 63:
+                        /*return Gambit*/
+                        var hasSticker = false;
+                        var itemId;
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 63)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemid;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                               if (confirm("You do not own a Gambit sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_challengers_collection&category_730_TournamentTeam%5B%5D=tag_Team63&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    }  
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked Gambit!");
+                                   sendPrediction(sectionId, groupId, index, 63, itemId); 
+                                }
+                            }
+                        
+                        break;
+                        
+                    case 12:
+                        /*return NaVi*/
+                        var hasSticker = false;
+                        var itemId;
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 12)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemid;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                               if (confirm("You do not own a NaVi sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_legends_collection&category_730_TournamentTeam%5B%5D=tag_Team12&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    } 
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked NaVi!");
+                                   sendPrediction(sectionId, groupId, index, 12, itemId); 
+                                }
+                            }
+                        
+                        break;
+                        
+                    case 43:
+                        /*return Flipsid3*/
+                        var hasSticker = false;
+                        var itemId;
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 43)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemid;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                               if (confirm("You do not own a Flipsid3 sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_challengers_collection&category_730_TournamentTeam%5B%5D=tag_Team43&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    } 
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked Flipsid3!");
+                                   sendPrediction(sectionId, groupId, index, 43, itemId); 
+                                }
+                            }
+                        
+                        break;
+                        
+                    case 1:
+                        /*return NiP*/
+                        var hasSticker = false;
+                        var itemId;
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 1)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemid;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                               if (confirm("You do not own an NiP sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_legends_collection&category_730_TournamentTeam%5B%5D=tag_Team1&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    } 
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked NiP!");
+                                   sendPrediction(sectionId, groupId, index, 1, itemId); 
+                                }
+                            }
+                        
+                        break;
+                        
+                    case 66:
+                        /*return OpTic*/
+                        var hasSticker = false;
+                        var itemId;
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 66)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemid;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                               if (confirm("You do not own an OpTic sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_challengers_collection&category_730_TournamentTeam%5B%5D=tag_Team66&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    } 
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked OpTic!");
+                                   sendPrediction(sectionId, groupId, index, 66, itemId); 
+                                }
+                            }
+                        
+                        break;
+                        
+                    case 48:
+                        /*return Liquid*/
+                        var hasSticker = false;
+                        var itemId;
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 48)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemid;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                               if (confirm("You do not own a Team Liquid sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_legends_collection&category_730_TournamentTeam%5B%5D=tag_Team48&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    } 
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked Team Liquid!");
+                                   sendPrediction(sectionId, groupId, index, 48, itemId); 
+                                }
+                            }
+                        
+                        break;
+                        
+                    case 46:
+                        /*return EnvyUs*/
+                        var hasSticker = false;
+                        var itemId;
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 46)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemid;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                               if (confirm("You do not own an EnvyUs sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_challengers_collection&category_730_TournamentTeam%5B%5D=tag_Team46&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    } 
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked EnvyUs!");
+                                   sendPrediction(sectionId, groupId, index, 46, itemId); 
+                                }
+                            }
+                        
+                        break;
+                    
+                    case 31:
+                        /*return Virtus.Pro*/
+                        var hasSticker = false;
+                        var itemId;
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 31)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemid;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                               if (confirm("You do not own a Virtus.Pro sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_legends_collection&category_730_TournamentTeam%5B%5D=tag_Team31&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    } 
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked Virtus.Pro!");
+                                   sendPrediction(sectionId, groupId, index, 31, itemId); 
+                                }
+                            }
+                        
+                        break;
+                        
+                    case 29:
+                        /*return Mousesports*/
+                        var hasSticker = false;
+                        var itemId;
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 29)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemid;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                               if (confirm("You do not own a Mousesports sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_challengers_collection&category_730_TournamentTeam%5B%5D=tag_Team29&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    } 
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked Mousesports!");
+                                   sendPrediction(sectionId, groupId, index, 29, itemId); 
+                                }
+                            }
+                        
+                        break;
+                        
+                    case 14:
+                        /*return SK Gaming*/
+                        var hasSticker = false;
+                        var itemId;
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 14)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemid;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                               if (confirm("You do not own an SK Gaming sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_legends_collection&category_730_TournamentTeam%5B%5D=tag_Team14&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    } 
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked SK Gaming!");
+                                   sendPrediction(sectionId, groupId, index, 14, itemId); 
+                                }
+                            }
+                        
+                        break;
+                        
+                    case 59:
+                        /*return G2 eSports*/
+                        var hasSticker = false;
+                        var itemId;
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 59)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemid;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                               if (confirm("You do not own a G2 eSports sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_challengers_collection&category_730_TournamentTeam%5B%5D=tag_Team59&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    } 
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked G2!");
+                                   sendPrediction(sectionId, groupId, index, 59, itemId); 
+                                }
+                            }
+                        
+                        break;
+                        
+                    case 6:
+                        /*return Fnatic*/
+                        var hasSticker = false;
+                        var itemId;
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 6)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemId;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                               if (confirm("You do not own a Fnatic sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_legends_collection&category_730_TournamentTeam%5B%5D=tag_Team6&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    } 
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked Fnatic!");
+                                   sendPrediction(sectionId, groupId, index, 6, itemId); 
+                                }
+                            }
+                        
+                        break;
+                        
+                    case 61:
+                        /*return Faze*/
+                        var hasSticker = false;
+                        var itemId;
+                        for (i = 0; i < userInventory.result.items.length; i++)
+                            {
+                                if (userInventory.result.items[i].type == "team" && userInventory.result.items[i].teamid == 61)
+                                {
+                                    
+                                    itemId = userInventory.result.items[i].itemId;
+                                    hasSticker = true;
+                                }
+                            }
+                        
+                        if (hasSticker == false)
+                            {
+                               if (confirm("You do not own a FaZe sticker, would you like to go to the steam marketplace?"))
+                                    {
+                                        window.open('http://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=any&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=tag_crate_sticker_pack_cologne2016_challengers_collection&category_730_TournamentTeam%5B%5D=tag_Team61&category_730_Weapon%5B%5D=any&category_730_StickerCategory%5B%5D=tag_TeamLogo&appid=730');
+                                    }
+                            }
+                        
+                        if(hasSticker == true)
+                            {
+                                if(window.confirm("Making a pick will lock this sticker. It will be unusable and untradable until the end of the match day. Removing this pick at a later time will not undo the lock."))
+                                {
+                                    alert("You picked FaZe!");
+                                   sendPrediction(sectionId, groupId, index, 61, itemId); 
+                                }
+                            }
+                        
+                        break;
+                        
+                    case 0:
+                        /*Return TBD*/
+                        alert("You cannot place a prediction on this match as it has not been decided yet!");
+                        break;
+                        
+                    
+                } 
+            
+            
+            
+        }
+
+        /*The following Display() functions draw a table containing the relevant teams as per their position in the TournamentLayout JSON and their pickids*/
+        function DisplayDay1(tournamentLayout)
+        {
+            /*Group Stage | Day 1 [sectionid: 29]*/
+            /*[groupid 118]*/
+            $("#118").html("<td>"+teamCheck(tournamentLayout.result.sections[0].groups[0].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[0].groups[0].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[0].teams[0].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[0].groupid+","+tournamentLayout.result.sections[0].groups[0].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[0].teams[1].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[0].groupid+","+tournamentLayout.result.sections[0].groups[0].picks[0].index+")'></td>");
+            
+            /*[groupid 119]*/
+            $("#119").html("<td>"+teamCheck(tournamentLayout.result.sections[0].groups[1].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[0].groups[1].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[1].teams[0].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[1].groupid+","+tournamentLayout.result.sections[0].groups[1].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[1].teams[1].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[1].groupid+","+tournamentLayout.result.sections[0].groups[1].picks[0].index+")'></td>");
+            
+            /*[groupid 120]*/
+            $("#120").html("<td>"+teamCheck(tournamentLayout.result.sections[0].groups[2].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[0].groups[2].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[2].teams[0].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[2].groupid+","+tournamentLayout.result.sections[0].groups[2].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[2].teams[1].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[2].groupid+","+tournamentLayout.result.sections[0].groups[2].picks[0].index+")'></td>");
+           
+            
+            /*[groupid 121]*/
+            $("#121").html("<td>"+teamCheck(tournamentLayout.result.sections[0].groups[3].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[0].groups[3].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[3].teams[0].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[3].groupid+","+tournamentLayout.result.sections[0].groups[3].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[3].teams[1].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[3].groupid+","+tournamentLayout.result.sections[0].groups[3].picks[0].index+")'></td>");
+            
+            
+            /*[groupid 122]*/
+            $("#122").html("<td>"+teamCheck(tournamentLayout.result.sections[0].groups[4].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[0].groups[4].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[4].teams[0].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[4].groupid+","+tournamentLayout.result.sections[0].groups[4].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[4].teams[1].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[4].groupid+","+tournamentLayout.result.sections[0].groups[4].picks[0].index+")'></td>");
+            
+            /*[groupid 123]*/
+            $("#123").html("<td>"+teamCheck(tournamentLayout.result.sections[0].groups[5].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[0].groups[5].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[5].teams[0].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[5].groupid+","+tournamentLayout.result.sections[0].groups[5].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[5].teams[1].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[5].groupid+","+tournamentLayout.result.sections[0].groups[5].picks[0].index+")'></td>");
+            
+            /*[groupid 124]*/
+            $("#124").html("<td>"+teamCheck(tournamentLayout.result.sections[0].groups[6].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[0].groups[6].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[6].teams[0].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[6].groupid+","+tournamentLayout.result.sections[0].groups[6].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[6].teams[1].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[6].groupid+","+tournamentLayout.result.sections[0].groups[6].picks[0].index+")'></td>");
+            
+            /*[groupid 125]*/
+            $("#125").html("<td>"+teamCheck(tournamentLayout.result.sections[0].groups[7].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[0].groups[7].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[7].teams[0].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[7].groupid+","+tournamentLayout.result.sections[0].groups[7].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[0].groups[7].teams[1].pickid+","+tournamentLayout.result.sections[0].sectionid+","+tournamentLayout.result.sections[0].groups[7].groupid+","+tournamentLayout.result.sections[0].groups[7].picks[0].index+")'></td>");
+            
+             
+            
+            DisplayDay2(tournamentLayout);
+        }
+        
+        function DisplayDay2(tournamentLayout)
+        {
+            /*Group Stage | Day 2 [sectionid: 30]*/
+            /*[groupid 126]*/
+            $("#126").html("<td>"+teamCheck(tournamentLayout.result.sections[1].groups[0].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[1].groups[0].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[0].teams[0].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[0].groupid+","+tournamentLayout.result.sections[1].groups[0].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[0].teams[1].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[0].groupid+","+tournamentLayout.result.sections[1].groups[0].picks[0].index+")'></td>");
+            /*[groupid 127]*/
+            $("#127").html("<td>"+teamCheck(tournamentLayout.result.sections[1].groups[1].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[1].groups[1].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[1].teams[0].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[1].groupid+","+tournamentLayout.result.sections[1].groups[1].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[1].teams[1].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[1].groupid+","+tournamentLayout.result.sections[1].groups[1].picks[0].index+")'></td>");
+            /*[groupid 128]*/
+            $("#128").html("<td>"+teamCheck(tournamentLayout.result.sections[1].groups[2].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[1].groups[2].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[2].teams[0].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[2].groupid+","+tournamentLayout.result.sections[1].groups[2].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[2].teams[1].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[2].groupid+","+tournamentLayout.result.sections[1].groups[2].picks[0].index+")'></td>");
+            /*[groupid 129]*/
+            $("#129").html("<td>"+teamCheck(tournamentLayout.result.sections[1].groups[3].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[1].groups[3].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[3].teams[0].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[3].groupid+","+tournamentLayout.result.sections[1].groups[3].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[3].teams[1].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[3].groupid+","+tournamentLayout.result.sections[1].groups[3].picks[0].index+")'></td>");
+            /*[groupid 130]*/
+            $("#130").html("<td>"+teamCheck(tournamentLayout.result.sections[1].groups[4].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[1].groups[4].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[4].teams[0].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[4].groupid+","+tournamentLayout.result.sections[1].groups[4].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[4].teams[1].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[4].groupid+","+tournamentLayout.result.sections[1].groups[4].picks[0].index+")'></td>");
+            /*[groupid 131]*/
+            $("#131").html("<td>"+teamCheck(tournamentLayout.result.sections[1].groups[5].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[1].groups[5].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[5].teams[0].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[5].groupid+","+tournamentLayout.result.sections[1].groups[5].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[5].teams[1].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[5].groupid+","+tournamentLayout.result.sections[1].groups[5].picks[0].index+")'></td>");
+            /*[groupid 132]*/
+            $("#132").html("<td>"+teamCheck(tournamentLayout.result.sections[1].groups[6].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[1].groups[6].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[6].teams[0].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[6].groupid+","+tournamentLayout.result.sections[1].groups[6].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[6].teams[1].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[6].groupid+","+tournamentLayout.result.sections[1].groups[6].picks[0].index+"6)'></td>");
+            /*[groupid 133]*/
+            $("#133").html("<td>"+teamCheck(tournamentLayout.result.sections[1].groups[7].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[1].groups[7].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[7].teams[0].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[7].groupid+","+tournamentLayout.result.sections[1].groups[7].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[1].groups[7].teams[1].pickid+","+tournamentLayout.result.sections[1].sectionid+","+tournamentLayout.result.sections[1].groups[7].groupid+","+tournamentLayout.result.sections[1].groups[7].picks[0].index+")'></td>");
+            
+            DisplayDay3(tournamentLayout);
+        }
+        
+        function DisplayDay3(tournamentLayout)
+        {
+             /*Group Stage | Day 3 [sectionid: 31]*/
+            /*[groupid 134]*/
+            $("#134").html("<td>"+teamCheck(tournamentLayout.result.sections[2].groups[0].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[2].groups[0].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[2].groups[0].teams[0].pickid+","+tournamentLayout.result.sections[2].sectionid+","+tournamentLayout.result.sections[2].groups[0].groupid+","+tournamentLayout.result.sections[2].groups[0].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[2].groups[0].teams[1].pickid+","+tournamentLayout.result.sections[2].sectionid+","+tournamentLayout.result.sections[2].groups[0].groupid+","+tournamentLayout.result.sections[2].groups[0].picks[0].index+")'></td>");
+            /*[groupid 135]*/
+            $("#135").html("<td>"+teamCheck(tournamentLayout.result.sections[2].groups[1].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[2].groups[1].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[2].groups[1].teams[0].pickid+","+tournamentLayout.result.sections[2].sectionid+","+tournamentLayout.result.sections[2].groups[1].groupid+","+tournamentLayout.result.sections[2].groups[1].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[2].groups[1].teams[1].pickid+","+tournamentLayout.result.sections[2].sectionid+","+tournamentLayout.result.sections[2].groups[1].groupid+","+tournamentLayout.result.sections[2].groups[1].picks[0].index+")'></td>");
+            /*[groupid 136]*/
+            $("#136").html("<td>"+teamCheck(tournamentLayout.result.sections[2].groups[2].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[2].groups[2].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[2].groups[2].teams[0].pickid+","+tournamentLayout.result.sections[2].sectionid+","+tournamentLayout.result.sections[2].groups[2].groupid+","+tournamentLayout.result.sections[2].groups[2].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[2].groups[2].teams[1].pickid+","+tournamentLayout.result.sections[2].sectionid+","+tournamentLayout.result.sections[2].groups[2].groupid+","+tournamentLayout.result.sections[2].groups[2].picks[0].index+")'></td>");
+            /*[groupid 137]*/
+            $("#137").html("<td>"+teamCheck(tournamentLayout.result.sections[2].groups[3].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[2].groups[3].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[2].groups[3].teams[0].pickid+","+tournamentLayout.result.sections[2].sectionid+","+tournamentLayout.result.sections[2].groups[3].groupid+","+tournamentLayout.result.sections[2].groups[3].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[2].groups[3].teams[1].pickid+","+tournamentLayout.result.sections[2].sectionid+","+tournamentLayout.result.sections[2].groups[3].groupid+","+tournamentLayout.result.sections[2].groups[3].picks[0].index+")'></td>");
+            
+            
+            DisplayQuarterFinals(tournamentLayout);
+        }
+        
+        function DisplayQuarterFinals(tournamentLayout)
+        {
+            /*Quarter Finals [sectionid: 32]*/
+            /*[groupid 134]*/
+            $("#138").html("<td>"+teamCheck(tournamentLayout.result.sections[3].groups[0].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[3].groups[0].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[3].groups[0].teams[0].pickid+","+tournamentLayout.result.sections[3].sectionid+","+tournamentLayout.result.sections[3].groups[0].groupid+","+tournamentLayout.result.sections[3].groups[0].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[3].groups[0].teams[1].pickid+","+tournamentLayout.result.sections[3].sectionid+","+tournamentLayout.result.sections[3].groups[0].groupid+","+tournamentLayout.result.sections[3].groups[0].picks[0].index+")'></td>");
+            /*[groupid 135]*/
+            $("#139").html("<td>"+teamCheck(tournamentLayout.result.sections[3].groups[1].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[3].groups[1].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[3].groups[1].teams[0].pickid+","+tournamentLayout.result.sections[3].sectionid+","+tournamentLayout.result.sections[3].groups[1].groupid+","+tournamentLayout.result.sections[3].groups[1].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[3].groups[1].teams[1].pickid+","+tournamentLayout.result.sections[3].sectionid+","+tournamentLayout.result.sections[3].groups[1].groupid+","+tournamentLayout.result.sections[3].groups[1].picks[0].index+")'></td>");
+            /*[groupid 136]*/
+            $("#140").html("<td>"+teamCheck(tournamentLayout.result.sections[3].groups[2].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[3].groups[2].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[3].groups[2].teams[0].pickid+","+tournamentLayout.result.sections[3].sectionid+","+tournamentLayout.result.sections[3].groups[2].groupid+","+tournamentLayout.result.sections[3].groups[2].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[3].groups[2].teams[1].pickid+","+tournamentLayout.result.sections[3].sectionid+","+tournamentLayout.result.sections[3].groups[2].groupid+","+tournamentLayout.result.sections[3].groups[2].picks[0].index+")'></td>");
+            /*[groupid 137]*/
+            $("#141").html("<td>"+teamCheck(tournamentLayout.result.sections[3].groups[3].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[3].groups[3].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[3].groups[3].teams[0].pickid+","+tournamentLayout.result.sections[3].sectionid+","+tournamentLayout.result.sections[3].groups[3].groupid+","+tournamentLayout.result.sections[3].groups[3].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[3].groups[3].teams[1].pickid+","+tournamentLayout.result.sections[3].sectionid+","+tournamentLayout.result.sections[3].groups[3].groupid+","+tournamentLayout.result.sections[3].groups[3].picks[0].index+")'></td>");
+            
+            DisplayFinals(tournamentLayout);
+        }
+        
+        function DisplayFinals(tournamentLayout)
+        {
+             /*Semi Finals [sectionid: 33]*/
+            /*[groupid 142]*/
+            $("#142").html("<td>"+teamCheck(tournamentLayout.result.sections[4].groups[0].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[4].groups[0].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[4].groups[0].teams[0].pickid+","+tournamentLayout.result.sections[4].sectionid+","+tournamentLayout.result.sections[4].groups[0].groupid+","+tournamentLayout.result.sections[4].groups[0].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[4].groups[0].teams[1].pickid+","+tournamentLayout.result.sections[4].sectionid+","+tournamentLayout.result.sections[4].groups[0].groupid+","+tournamentLayout.result.sections[4].groups[0].picks[0].index+")'></td>");
+            /*[groupid 143]*/
+            $("#143").html("<td>"+teamCheck(tournamentLayout.result.sections[4].groups[1].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[4].groups[1].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[4].groups[1].teams[0].pickid+","+tournamentLayout.result.sections[4].sectionid+","+tournamentLayout.result.sections[4].groups[0].groupid+","+tournamentLayout.result.sections[4].groups[1].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[4].groups[1].teams[1].pickid+","+tournamentLayout.result.sections[4].sectionid+","+tournamentLayout.result.sections[4].groups[0].groupid+","+tournamentLayout.result.sections[4].groups[1].picks[0].index+")'></td>");
+            
+            /*Grand Final [sectionid: 34]*/
+            /*[groupid 144]*/
+            $("#144").html("<td>"+teamCheck(tournamentLayout.result.sections[5].groups[0].teams[0].pickid)+teamCheck(tournamentLayout.result.sections[5].groups[0].teams[1].pickid)+"</td><td><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[5].groups[0].teams[0].pickid+","+tournamentLayout.result.sections[5].sectionid+","+tournamentLayout.result.sections[5].groups[0].groupid+","+tournamentLayout.result.sections[5].groups[0].picks[0].index+")'><br><br><input type='button' value='+' onclick='placePrediction("+tournamentLayout.result.sections[5].groups[0].teams[1].pickid+","+tournamentLayout.result.sections[5].sectionid+","+tournamentLayout.result.sections[5].groups[0].groupid+","+tournamentLayout.result.sections[5].groups[0].picks[0].index+")'></td>");
+        }
+        
+        
+        /*Checks which pickid is active in the group section and assigns a name and an image to that id for display use*/
+        function teamCheck(pickid)
+        {
+            var teamTextArray = ["Astralis", "Dignitas", "CLG", "Gambit", "NaVi", "Flipsid3", "NiP", "OpTic", "Liquid", "EnvyUs", "Virtus.Pro", "Mousesports", "SK Gaming", "G2 eSports", "Fnatic", "FaZe"];
+            
+            var teamImgArray = ["images/astr.png", "images/dig.png", "images/clg.png", "images/gamb.png", "images/navi.png", "images/flip.png", "images/nip.png", "images/optc.png", "images/liquid.png", "images/envy.png", "images/vp.png", "images/mouz.png", "images/sk.png", "images/g2.png", "images/fnc.png", "images/faze.png"];
+            
+            switch(pickid)
+                {
+                    case 60:
+                        /*return Astralis*/
+                        var astrText = teamTextArray[0] + " <img src='"+teamImgArray[0]+"' height='40' width='40'><br>";
+                        return astrText;
+                        break;
+                    
+                    case 24:
+                        /*return Dignitas*/
+                        var digText = teamTextArray[1] + " <img src='"+teamImgArray[1]+"' height='40' width='40'><br>";
+                        return digText;
+                        break;
+                    
+                    case 49:
+                        /*return CLG*/
+                        var clgText = teamTextArray[2] + " <img src='"+teamImgArray[2]+"' height='40' width='40'><br>";
+                        return clgText;
+                        break;
+                        
+                    case 63:
+                        /*return Gambit*/
+                        var gambText = teamTextArray[3] + " <img src='"+teamImgArray[3]+"' height='40' width='40'><br>";
+                        return gambText;
+                        break;
+                        
+                    case 12:
+                        /*return NaVi*/
+                        var naviText = teamTextArray[4] + " <img src='"+teamImgArray[4]+"' height='40' width='40'><br>";
+                        return naviText;
+                        break;
+                        
+                    case 43:
+                        /*return Flipsid3*/
+                        var flipText = teamTextArray[5] + " <img src='"+teamImgArray[5]+"' height='40' width='40'><br>";
+                        return flipText;
+                        break;
+                        
+                    case 1:
+                        /*return NiP*/
+                        var nipText = teamTextArray[6] + " <img src='"+teamImgArray[6]+"' height='40' width='40'><br>";
+                        return nipText;
+                        break;
+                        
+                    case 66:
+                        /*return OpTic*/
+                        var optcText = teamTextArray[7] + " <img src='"+teamImgArray[7]+"' height='40' width='40'><br>";
+                        return optcText;
+                        break;
+                        
+                    case 48:
+                        /*return Liquid*/
+                        var liquidText = teamTextArray[8] + " <img src='"+teamImgArray[8]+"' height='40' width='40'><br>";
+                        return liquidText;
+                        break;
+                        
+                    case 46:
+                        /*return EnvyUs*/
+                        var envyText = teamTextArray[9] + " <img src='"+teamImgArray[9]+"' height='40' width='40'><br>";
+                        return envyText;
+                        break;
+                    
+                    case 31:
+                        /*return Virtus.Pro*/
+                        var vpText = teamTextArray[10] + " <img src='"+teamImgArray[10]+"' height='40' width='40'><br>";
+                        return vpText;
+                        break;
+                        
+                    case 29:
+                        /*return Mousesports*/
+                        var mouzText = teamTextArray[11] + " <img src='"+teamImgArray[11]+"' height='40' width='40'><br>";
+                        return mouzText;
+                        break;
+                        
+                    case 14:
+                        /*return SK Gaming*/
+                        var skText = teamTextArray[12] + " <img src='"+teamImgArray[12]+"' height='40' width='40'><br>";
+                        return skText;
+                        break;
+                        
+                    case 59:
+                        /*return G2 eSports*/
+                        var g2Text = teamTextArray[13] + " <img src='"+teamImgArray[13]+"' height='40' width='40'><br>";
+                        return g2Text;
+                        break;
+                        
+                    case 6:
+                        /*return Fnatic*/
+                        var fncText = teamTextArray[14] + " <img src='"+teamImgArray[14]+"' height='40' width='40'><br>";
+                        return fncText;
+                        break;
+                        
+                    case 61:
+                        /*return Faze*/
+                        var fazeText = teamTextArray[15] + " <img src='"+teamImgArray[15]+"' height='40' width='40'><br>";
+                        return fazeText;
+                        break;
+                        
+                    case 0:
+                        /*Return TBD*/
+                        var tbdText = "TBD<br>";
+                        return tbdText;
+                        break;
+                        
+                    
+                }
+        }
+        
+
+        /*Retrieves cookies and reuses them to avoid user having to enter steamId and AuthCode more than once*/
+        function GetCookies()
+        {
+            userAuthCode = Cookies.get('userAuthCode');
+            steamId = Cookies.get('steamId');
+
+            console.log(userAuthCode);
+            console.log(steamId);
+        }
+        
+        /*Used to make user inventory a global variable for use in other functions without the need for calling*/
+        function userInventoryPass(userInventory)
+        {
+            userInventoryPassed = userInventory;
+        }
+        
+        /*Will send the steam api url, containing userAuthCode and steamId, to the proxy and return the user inventory pertaining to the steamId and AuthCode sent.*/
+        function GetUserInventory() 
+        {
+            /*User Inventory URL*/
+            var apiUrl = "https://api.steampowered.com/ICSGOTournaments_730/GetTournamentItems/v1?key=EF12AE62D534AA0B3E4A6930CDF30A56&event=10&steamid="+steamId+"&steamidkey="+userAuthCode;
+
+            /*RETRIEVE USER INVENTORY*/
+            $.ajax({
+                method: 'GET',
+                url: 'http://pickemchallenge.2fh.co/Pickem-Challenge/external/userPredictions.php?route',
+                dataType: 'text',
+                data: 
+                {
+                    'apiUrlPassed' : apiUrl
+                },
+                success: function(res)
+                {
+                    console.info("GetUserInventory(): User Inventory retrieved!");
+                    var userInventoryParsed = JSON.parse(res);
+                    userInventoryPass(userInventoryParsed);
+                },
+                error: function(xhr, status, error)
+                {
+                    console.log("Status: " + status + "\nError: " + error);
+                }
+            });
+        }
+
+        /*Retrieves Tournament Layout from the proxy as text, parses it into JSON and sends it to DisplayTournamentLayout() to be used in the HTML*/
+        function GetTournamentLayout()
+        {
+            $.ajax
+            ({
+                method: "GET",
+                url: "http://pickemchallenge.2fh.co/Pickem-Challenge/external/tournamentLayout.php?route=/other/resource",/*Proxy URL*/
+                dataType: "text",
+                success: function(data)
+                {
+                    try
+                    {
+                        /*Try parsing the JSON by adding a curly bracket due to incorrect JSON from Valve*/
+                        var tournamentLayoutParsed = JSON.parse(data + "}");
+                    }
+                    catch(e)
+                        {
+                            console.error("GetTournamentLayout(): Failed to parse Tournament Layout into JSON!");
+                        }
+                    try
+                    {
+                      console.info("GetTournamentLayout(): Successfully parsed Tournament Layout into JSON!");
+                      DisplayDay1(tournamentLayoutParsed);  
+                    }
+                    catch(e)
+                        {
+                            console.error("GetTournamentLayout(): Failed to send parsed JSON to DisplayTournamentLayout()");
+                        }
+                        
+                },
+                error: function(xhr, status, error)
+                {
+                    console.log("Status: " + status + "\nError: " + error);
+                }
+            });
+        }
+        
+    </script>
+    <!--JAVASCRIPT-->
+    <!--CSS-->
+    <style>
+        .Tables, th, td
+        {
+            margin-top: 15px;
+            border: 1px solid black;
+        }
+        .Tables
+        {
+            float: left;
+        }
+        .tablesDiv
+        {
+            margin-top: 15px;
+            margin-left: 15px;
+            float: left;
+        }
+    </style>
+    <!--CSS-->
+</head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">Cologne 2016 Pickems</span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation. We hide it in small screens. -->
+      <nav class="mdl-navigation mdl-layout--large-screen-only">
+        <a class="mdl-navigation__link" href="index.html">Home</a>
+        <a class="mdl-navigation__link" href="#">Team Pickem</a>
+        <a class="mdl-navigation__link" href="about.html">About</a>
+      </nav>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Cologne 2016 Pickems</span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" href="index.html">Home</a>
+      <a class="mdl-navigation__link" href="#">Team Pickem</a>
+      <a class="mdl-navigation__link" href="about.html">About</a>
+    </nav>
+  </div>
+  <main class="mdl-layout__content">
+    <div class="page-content">
+        <!--Group Stage Day 1-->
+            <div id="section29" class="tablesDiv">
+                <table id="29" class="Tables">
+                    <th>Group Stage | Day 1</th>
+                      <tr id="118">
+                      </tr>
+                      <tr id="119">
+                      </tr>
+                      <tr id="120">
+                      </tr>
+                      <tr id="121">
+                      </tr>
+                      <tr id="122">
+                      </tr>
+                      <tr id="123">
+                      </tr>
+                      <tr id="124">
+                      </tr>
+                      <tr id="125">
+                      </tr>
+                </table>
+            </div>
+        </div>
+        <!--Group Stage Day 2-->
+        <div id="section30" class="tablesDiv">
+            <table id="30" class="Tables">
+                <th>Group Stage | Day 2</th>
+                  <tr id="126">
+                  </tr>
+                  <tr id="127">
+                  </tr>
+                  <tr id="128">
+                  </tr>
+                  <tr id="129">
+                  </tr>
+                  <tr id="130">
+                  </tr>
+                  <tr id="131">
+                  </tr>
+                  <tr id="132">
+                  </tr>
+                  <tr id="133">
+                  </tr>
+            </table>
+      </div>
+        <!--Group Stage Day 3-->
+      <div id="section31" class="tablesDiv">
+            <table id="31" class="Tables">
+                <th>Group Stage | Day 3</th>
+                  <tr id="134">
+                  </tr>
+                  <tr id="135">
+                  </tr>
+                  <tr id="136">
+                  </tr>
+                  <tr id="137">
+                  </tr>
+            </table>
+      </div>
+        <!--Quarter Finals-->
+        <div id="section32" class="tablesDiv">
+            <table id="32" class="Tables">
+                <th>Quarter Finals</th>
+                  <tr id="138">
+                  </tr>
+                  <tr id="139">
+                  </tr>
+                  <tr id="140">
+                  </tr>
+                  <tr id="141">
+                  </tr>
+            </table>
+      </div>
+        <!--Semi Finals-->
+      <div id="section33" class="tablesDiv">
+            <table id="33" class="Tables">
+                <th>Semi Finals</th>
+                  <tr id="142">
+                  </tr>
+                  <tr id="143">
+                  </tr>
+            </table>
+      </div>
+        <!--Grand Final-->
+        <div id="section34" class="tablesDiv">
+            <table id="34" class="Tables">
+                <th>Grand Final</th>
+                  <tr id="144">
+                  </tr>
+            </table>
+      </div>
+  </main>
+</div>
+</body>
+</html>

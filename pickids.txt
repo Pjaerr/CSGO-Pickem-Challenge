@@ -1,0 +1,24 @@
+Astralis[pickid=60]
+Dignitas[pickid=24]
+
+CLG[pickid=49]
+Gambit[pickid=63]
+
+NaVi[pickid=12]
+Flipside3[pickid=43]
+
+NiP[pickid=1]
+OpTic[pickid=66]
+
+Liquid[pickid=48]
+EnvyUs[pickid=46]
+
+Virtus.Pro[pickid=31]
+Mousesports[pickid=29]
+
+SK Gaming[pickid=14]
+G2[pickid=59]
+
+Fnatic[pickid=6]
+FaZe[pickid=61]
+
